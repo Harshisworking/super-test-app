@@ -1,5 +1,5 @@
-const express = require('express');
-const { OpenRouter } = require('@openrouter/sdk'); // Native SDK import
+import express from 'express';
+import { OpenRouter } from '@openrouter/sdk';
 
 const app = express();
 const PORT = 5000;
