@@ -4,6 +4,8 @@ import OpenAI from 'openai';
 const app = express();
 const PORT = 5000;
 
+console.log("Checking API Key presence:", !!process.env.OPENROUTER_API_KEY);
+
 // Initialize OpenAI client pointing to OpenRouter
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
