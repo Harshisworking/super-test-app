@@ -7,7 +7,7 @@ const PORT = 5000;
 // Initialize OpenAI client pointing to OpenRouter
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY,
+  apiKey: process.env.OPENROUTER_API_KEY || "dummy_key_for_build", // Add a fallback to prevent crash during build
   defaultHeaders: {
     "HTTP-Referer": "http://dragophynix.local", 
     "X-Title": "Dragophynix PaaS",
