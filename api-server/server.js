@@ -20,15 +20,16 @@ app.get('/ai-talk', async (req, res) => {
 
   try {
     const completion = await openRouter.chat.send({
-      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
-      messages: [
-        {
-          role: 'user',
-          content: userPrompt,
-        },
-      ],
-      stream: false,
-    });
+  model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+  messages: [
+    {
+      role: 'user',
+      content: userPrompt,
+    },
+  ],
+  provider: {}, // Add this line to satisfy the "chatGenerationParams" requirement
+  stream: false,
+});
 
     // Send the content back to your React frontend
     res.json({ message: completion.choices[0].message.content });
