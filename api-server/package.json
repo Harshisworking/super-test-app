@@ -11,6 +11,6 @@
   "description": "",
   "dependencies": {
     "express": "^5.2.1",
-    "@openrouter/sdk": "^0.8.0"
+    "openai": "^4.28.0"
   }
 }
