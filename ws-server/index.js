@@ -2,7 +2,8 @@ const { WebSocketServer } = require('ws');
 const wss = new WebSocketServer({ 
   port: 8080,
   verifyClient: (info) => {
-    return info.origin === "http://dragophynix.local"; 
+    // Allow all origins for testing
+    return true; 
   }
 });
 
