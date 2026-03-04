@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL;
 
 export default function TestPage() {
   const [apiMsg, setApiMsg] = useState("Loading API...");
@@ -7,12 +9,12 @@ export default function TestPage() {
 
   useEffect(() => {
     // 1. Test HTTP
-    fetch('/super-test-app-api/data')
+    fetch(`${API_URL}/data`)
       .then(res => res.json())
       .then(data => setApiMsg(data.message));
 
     // 2. Test WebSocket
-    const socket = new WebSocket(`ws://${window.location.host}/super-test-app-ws/`);
+    const socket = new WebSocket(WS_URL);
     socket.onmessage = (e) => setWsMsg(JSON.parse(e.data).msg);
   }, []);
 
