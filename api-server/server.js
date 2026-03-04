@@ -23,7 +23,7 @@ app.get('/ai-talk', async (req, res) => {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "google/gemini-2.0-flash-lite-preview-02-05:free",
+      model: "meta-llama/llama-3.2-3b-instruct:free",
       messages: [
         { role: "user", content: userPrompt }
       ],
