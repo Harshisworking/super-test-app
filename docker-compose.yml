@@ -18,6 +18,8 @@ services:
   api-server:
     build: ./api-server
     container_name: ${PROJECT_NAME}-api-server
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
     networks:
       - web-gateway
 
