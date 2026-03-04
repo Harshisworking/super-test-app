@@ -7,7 +7,7 @@ services:
         - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
         - NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL}
         - PROJECT_NAME=${PROJECT_NAME}
-      environment:
+    environment:
       # This makes them available if you use Server-Side Rendering (SSR)
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
       - NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL}
