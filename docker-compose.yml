@@ -1,0 +1,25 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - PROJECT_NAME=${PROJECT_NAME}
+    container_name: ${PROJECT_NAME}-frontend
+    networks:
+      - web-gateway
+
+  api-server:
+    build: ./api-server
+    container_name: ${PROJECT_NAME}-api-server
+    networks:
+      - web-gateway
+
+  ws-server:
+    build: ./ws-server
+    container_name: ${PROJECT_NAME}-ws-server
+    networks:
+      - web-gateway
+
+networks:
+  web-gateway:
+    external: true
