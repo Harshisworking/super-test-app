@@ -1,34 +1,50 @@
 services:
+  db:
+    image: postgres:alpine
+    container_name: ${PROJECT_NAME}-db
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-example_password}
+      POSTGRES_USER: ${DB_USER:-myuser}
+      POSTGRES_DB: ${DB_NAME:-mydatabase}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - internal-bridge # DB stays hidden from the internet
+
   frontend:
     build:
       context: ./frontend
       args:
-        # This sends the values to the Dockerfile during 'npm run build'
         - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
         - NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL}
         - PROJECT_NAME=${PROJECT_NAME}
-    environment:
-      # This makes them available if you use Server-Side Rendering (SSR)
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-      - NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL}
     container_name: ${PROJECT_NAME}-frontend
     networks:
-      - web-gateway
+      - internal-bridge
+      - web-gateway # External Nginx can see this
 
   api-server:
     build: ./api-server
     container_name: ${PROJECT_NAME}-api-server
     environment:
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - DATABASE_URL=postgres://${DB_USER:-myuser}:${DB_PASSWORD:-example_password}@${PROJECT_NAME}-db:5432/${DB_NAME:-mydatabase}
     networks:
-      - web-gateway
+      - internal-bridge
+      - web-gateway # External Nginx can see this
 
   ws-server:
     build: ./ws-server
     container_name: ${PROJECT_NAME}-ws-server
     networks:
+      - internal-bridge
       - web-gateway
 
 networks:
+  internal-bridge:
+    driver: bridge # Fresh private wire for every project
   web-gateway:
-    external: true
+    external: true # Connects to your existing Master Nginx network
+
+volumes:
+  db_data: # Persists data even if you rebuild the containers
